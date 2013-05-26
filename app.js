@@ -16,6 +16,13 @@ var Server = mongo.Server,
     BSON = mongo.BSONPure;
 
 var server = new Server('localhost', 27017, {auto_reconnect: true});
+var db = new Db('test', server);
+
+db.open(function(err, db) {
+    if(!err) {
+        console.log("Connected to " + db.databaseName + " database");
+    }
+});
 
 var app = express();
 
