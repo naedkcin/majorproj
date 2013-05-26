@@ -10,21 +10,6 @@ var express = require('express')
   , http = require('http')
   , path = require('path');
 
-var mongo = require('mongodb');
-
-var Server = mongo.Server,
-    Db = mongo.Db,
-    BSON = mongo.BSONPure;
-
-var server = new Server('localhost', 27017, {auto_reconnect: true});
-var db = new Db('test', server);
-
-db.open(function(err, db) {
-    if(!err) {
-        console.log("Connected to " + db.databaseName + " database");
-    }
-});
-
 var app = express();
 
 // all environments
