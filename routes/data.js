@@ -7,6 +7,7 @@
  */
 
 var mongo = require('mongodb');
+var fs = require('fs');
 
 var Server = mongo.Server,
     Db = mongo.Db,
@@ -32,9 +33,39 @@ exports.clear = function(req, res){
 
 exports.load = function(req, res){
 
-    db.collection('people', function(err, collection) {
-        collection.insert( { name: "Bob"}, {safe:true}, function(err, result) {});
-    });
+    var buf = [];
 
-    res.send("Database loaded");
+    fs.readFile('people.csv', function(err, data) {
+        if (err) throw err;
+
+        buf = data.toString().split("#\r\n");
+
+        console.log(buf);
+
+        for(var i = 0; i < buf.length; i++) {
+
+            var peopleObj = {};
+            var peopleRec = [];
+
+            peopleRec = buf[i].split(",");
+
+            peopleObj.firstname = peopleRec[0];
+            peopleObj.lastname = peopleRec[1];
+            peopleObj.email = peopleRec[2];
+            peopleObj.homephone = peopleRec[3];
+            peopleObj.mobile = peopleRec[5];
+            peopleObj.address = peopleRec[6];
+
+            console.log(peopleObj);
+
+            db.collection('people', function(err, collection) {
+                collection.insert( peopleObj , {safe:true}, function(err, result) {});
+            });
+
+        };
+
+        res.send("Database loaded");
+
+    } )
+
 };
