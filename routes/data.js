@@ -62,10 +62,22 @@ exports.load = function(req, res){
                 collection.insert( peopleObj , {safe:true}, function(err, result) {});
             });
 
-        };
+        }
 
         res.send("Database loaded");
 
     } )
+
+};
+
+exports.list = function (req, res){
+
+    //var peopleArr = [];
+
+    db.collection('people', function(err, collection) {
+        collection.find({}).toArray(function(err, docs) {
+            res.render('table', { title: 'People', people: docs });
+        });
+    });
 
 };

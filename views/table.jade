@@ -1,0 +1,20 @@
+//
+   Created with JetBrains WebStorm.
+   User: dave
+   Date: 26/05/13
+   Time: 9:30 PM
+   To change this template use File | Settings | File Templates.
+
+extends layout
+
+block content
+
+    h1= title
+
+    table
+        each row in people
+            tr
+                td #{row.lastname}
+                td #{row.firstname}
+                td #{row.mobile}
+
