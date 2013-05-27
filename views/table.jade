@@ -13,7 +13,7 @@ block title
 
 block content
 
-    script
+    script.
       $(document).ready(function() {
         $(".active").removeClass("active");
         $("#list").addClass("active");
@@ -25,11 +25,17 @@ block content
             tr
                 th Last Name
                 th First Name
+                th Home Phone
                 th Mobile
+                //th Email
+                th Address
 
             each row in people
                 tr
                     td #{row.lastname}
                     td #{row.firstname}
+                    td #{row.homephone}
                     td #{row.mobile}
+                    //td #{row.email}
+                    td #{row.address.slice(1,row.address.length-1)}
 
