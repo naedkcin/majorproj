@@ -7,14 +7,29 @@
 
 extends layout
 
-block content
+block title
 
     h1= title
 
-    table
-        each row in people
+block content
+
+    script
+      $(document).ready(function() {
+        $(".active").removeClass("active");
+        $("#list").addClass("active");
+      });
+
+    div.span12
+        table.table.table-bordered.table-striped
+
             tr
-                td #{row.lastname}
-                td #{row.firstname}
-                td #{row.mobile}
+                th Last Name
+                th First Name
+                th Mobile
+
+            each row in people
+                tr
+                    td #{row.lastname}
+                    td #{row.firstname}
+                    td #{row.mobile}
 

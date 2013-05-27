@@ -28,7 +28,7 @@ exports.clear = function(req, res){
         collection.remove(function(err, result) {});
     });
 
-    res.send("Database cleared");
+    res.render('index', { title: 'Database cleared', tab: "clear" });
 };
 
 exports.load = function(req, res){
@@ -64,7 +64,7 @@ exports.load = function(req, res){
 
         }
 
-        res.send("Database loaded");
+        res.render('index', { title: 'Database loaded', tab: "load" });
 
     } )
 
@@ -75,7 +75,8 @@ exports.list = function (req, res){
     //var peopleArr = [];
 
     db.collection('people', function(err, collection) {
-        collection.find({}).toArray(function(err, docs) {
+//        collection.find({ firstname: { $regex : '^S' } }).toArray(function(err, docs) {
+        collection.find({  }).toArray(function(err, docs) {
             res.render('table', { title: 'People', people: docs });
         });
     });
