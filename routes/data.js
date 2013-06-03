@@ -35,7 +35,7 @@ exports.load = function(req, res){
 
     var buf = [];
 
-    fs.readFile('people.csv', function(err, data) {
+    fs.readFile('contacts.csv', function(err, data) {
         if (err) throw err;
 
         buf = data.toString().split("#\r\n");
@@ -53,8 +53,8 @@ exports.load = function(req, res){
             peopleObj.lastname = peopleRec[1];
             peopleObj.email = peopleRec[2];
             peopleObj.homephone = peopleRec[3];
-            peopleObj.mobile = peopleRec[5];
-            peopleObj.address = peopleRec[6];
+            peopleObj.mobile = peopleRec[4];
+            peopleObj.address = peopleRec[5];
 
             console.log(peopleObj);
 
