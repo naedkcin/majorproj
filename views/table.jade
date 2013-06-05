@@ -7,17 +7,7 @@
 
 extends layout
 
-block title
-
-    h1= title
-
 block content
-
-    script.
-      $(document).ready(function() {
-        $(".active").removeClass("active");
-        $("#list").addClass("active");
-      });
 
     div.span12
         table.table.table-bordered.table-striped
@@ -29,6 +19,7 @@ block content
                 th Mobile
                 th Email
                 th Address
+                th.muted Del
 
             each row in people
                 tr
@@ -39,7 +30,6 @@ block content
                     td #{row.email}
                     td #{row.address}
                     td
-                        a(href="/remove?_id=#{row._id}")
-                            i.icon-remove-sign
+                        a.close(href="/remove?_id=#{row._id}")&times;
 
 

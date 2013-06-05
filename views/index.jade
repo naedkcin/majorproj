@@ -1,11 +1,5 @@
 extends layout
 
-block title
-  h1= title
-  //p Welcome to #{title}
+block content
 
-  script.
-    $(document).ready(function() {
-      $(".active").removeClass("active");
-      $("##{tab}").addClass("active");
-    });
+    p.hero-unit Welcome to the app...

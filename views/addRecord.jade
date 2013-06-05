@@ -7,17 +7,7 @@
 
 extends layout
 
-block title
-
-    h1= title
-
 block content
-
-    script.
-      $(document).ready(function() {
-        $(".active").removeClass("active");
-        $("#add").addClass("active");
-      });
 
     div.span12
         h3 Record has been added

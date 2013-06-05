@@ -6,7 +6,7 @@ html
     include inc/header
   body
 
-    block title
+    h1.page-header= title
 
     ul.nav.nav-pills
       li#home: a(href='/') Home
@@ -14,5 +14,11 @@ html
       li#load: a(href='/load') Load Database
       li#list: a(href='/list') List Database
       li#add: a(href='/add') Add Record
+
+    script.
+      $(document).ready(function() {
+          $(".active").removeClass("active");
+          $("##{tab}").addClass("active");
+      });
 
     block content

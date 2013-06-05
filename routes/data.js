@@ -78,7 +78,7 @@ exports.list = function (req, res){
     db.collection('people', function(err, collection) {
 //        collection.find({ firstname: { $regex : '^S' } }).toArray(function(err, docs) {
         collection.find({  }).toArray(function(err, docs) {
-            res.render('table', { title: 'People', people: docs });
+            res.render('table', { title: 'People', tab: "list" , people: docs });
         });
     });
 
@@ -86,7 +86,7 @@ exports.list = function (req, res){
 
 exports.addForm = function (req, res){
 
-    res.render('addForm', { title: 'Add Contact'});
+    res.render('addForm', { title: 'Add Contact', tab: "add" });
 
 };
 
@@ -97,7 +97,7 @@ exports.addRecord = function (req, res){
         collection.insert( req.body , {safe:true}, function(err, result) {});
     });
 
-    res.render('addRecord', { title: 'Add Contact', row: req.body });
+    res.render('addRecord', { title: 'Add Contact', tab: "add" , row: req.body });
 
 };
 

@@ -7,31 +7,21 @@
 
 extends layout
 
-block title
-
-    h1= title
-
 block content
 
-    script.
-      $(document).ready(function() {
-        $(".active").removeClass("active");
-        $("#add").addClass("active");
-      });
-
-    div.span6
+    div.span6.hero-unit
         h4 Please enter the details of a new person
         form(method="post")
             .span2 First Name:
-            input(type="text", name="firstname")
+            input(type="text", name="firstname", required)
             .span2 Last Name:
             input(type="text", name="lastname")
             .span2 Email:
-            input(type="text", name="email")
+            input(type="email", name="email" , required)
             .span2 Home Phone:
             input(type="text", name="homephone")
             .span2 Mobile:
-            input(type="text", name="mobile")
+            input(type="text", name="mobile", required)
             .span2 Address:
             input(type="text", name="address")
             div.row
