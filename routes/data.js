@@ -26,9 +26,10 @@ exports.clear = function(req, res){
 
     db.collection('people', function(err, collection) {
         collection.remove(function(err, result) {});
+        res.render('index', { title: 'Database cleared', tab: "clear" });
     });
 
-    res.render('index', { title: 'Database cleared', tab: "clear" });
+
 };
 
 exports.load = function(req, res){
@@ -97,5 +98,17 @@ exports.addRecord = function (req, res){
     });
 
     res.render('addRecord', { title: 'Add Contact', row: req.body });
+
+};
+
+exports.remove = function (req, res){
+
+    var obj_id = new BSON.ObjectID(req.query._id);
+
+    db.collection('people', function(err, collection) {
+        console.log(req.query);
+        collection.remove({ _id: obj_id }, function(err, result) {});
+        res.redirect("/list");
+    });
 
 };
