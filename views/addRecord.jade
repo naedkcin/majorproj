@@ -1,8 +1,8 @@
 //
    Created with JetBrains WebStorm.
    User: dave
-   Date: 26/05/13
-   Time: 9:30 PM
+   Date: 5/06/13
+   Time: 6:09 PM
    To change this template use File | Settings | File Templates.
 
 extends layout
@@ -16,21 +16,21 @@ block content
     script.
       $(document).ready(function() {
         $(".active").removeClass("active");
-        $("#list").addClass("active");
+        $("#add").addClass("active");
       });
 
     div.span12
+        h3 Record has been added
+
         table.table.table-bordered.table-striped
+                tr
+                    th Last Name
+                    th First Name
+                    th Home Phone
+                    th Mobile
+                    th Email
+                    th Address
 
-            tr
-                th Last Name
-                th First Name
-                th Home Phone
-                th Mobile
-                th Email
-                th Address
-
-            each row in people
                 tr
                     td #{row.lastname}
                     td #{row.firstname}
@@ -38,4 +38,3 @@ block content
                     td #{row.mobile}
                     td #{row.email}
                     td #{row.address}
-

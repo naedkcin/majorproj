@@ -1,0 +1,46 @@
+//
+   Created with JetBrains WebStorm.
+   User: dave
+   Date: 5/06/13
+   Time: 4:51 PM
+   To change this template use File | Settings | File Templates.
+
+extends layout
+
+block title
+
+    h1= title
+
+block content
+
+    script.
+      $(document).ready(function() {
+        $(".active").removeClass("active");
+        $("#add").addClass("active");
+      });
+
+    div.span6
+        h4 Please enter the details of a new person
+        form(method="post")
+            .span2 First Name:
+            input(type="text", name="firstname")
+            .span2 Last Name:
+            input(type="text", name="lastname")
+            .span2 Email:
+            input(type="text", name="email")
+            .span2 Home Phone:
+            input(type="text", name="homephone")
+            .span2 Mobile:
+            input(type="text", name="mobile")
+            .span2 Address:
+            input(type="text", name="address")
+            div.row
+                div.span1
+                div.span2
+                    input.btn.btn-danger(type="reset")Clear
+                dive.span2
+                    input.btn.btn-success(type="submit")Add
+
+
+
+

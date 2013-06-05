@@ -82,3 +82,20 @@ exports.list = function (req, res){
     });
 
 };
+
+exports.addForm = function (req, res){
+
+    res.render('addForm', { title: 'Add Contact'});
+
+};
+
+exports.addRecord = function (req, res){
+
+    db.collection('people', function(err, collection) {
+        console.log(req.body);
+        collection.insert( req.body , {safe:true}, function(err, result) {});
+    });
+
+    res.render('addRecord', { title: 'Add Contact', row: req.body });
+
+};
