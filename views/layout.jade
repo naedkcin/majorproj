@@ -3,5 +3,15 @@ html
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
+    include inc/header
   body
+
+    block title
+
+    ul.nav.nav-pills
+      li#home: a(href='/') Home
+      li#clear: a(href='/clear') Clear Database
+      li#load: a(href='/load') Load Database
+      li#list: a(href='/list') List Database
+
     block content

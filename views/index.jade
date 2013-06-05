@@ -1,12 +1,11 @@
 extends layout
 
-block content
+block title
   h1= title
-  p Welcome to #{title}
-  ul
-    li
-      a(href='/clear') Clear Database
-    li
-      a(href='/load') Load Database
-    li
-      a(href='/list') List Database
+  //p Welcome to #{title}
+
+  script.
+    $(document).ready(function() {
+      $(".active").removeClass("active");
+      $("##{tab}").addClass("active");
+    });
