@@ -30,8 +30,8 @@ var people = mongoose.model('people', peopleSchema);
 
 exports.clear = function(req, res){
 
-    people.remove({}, function (err) {
-        if (err) return handleError(err);
+    people.remove(function (err) {
+        if (err) throw err;
         res.render('index', { title: 'Database cleared', tab: "clear" });
     });
 
@@ -65,7 +65,7 @@ exports.load = function(req, res){
             console.log(peopleObj);
 
             peopleObj.save(function (err) {
-                if (err) return handleError(err);
+                if (err) throw err;
                 console.log("people added");
             });
 
@@ -80,6 +80,7 @@ exports.load = function(req, res){
 exports.list = function (req, res){
 
     people.find({}, function(err, docs) {
+        if (err) throw err;
         res.render('table', { title: 'People', tab: "list" , people: docs });
     });
 
@@ -98,19 +99,21 @@ exports.addRecord = function (req, res){
     console.log(peopleObj);
 
     peopleObj.save(function (err) {
-        if (err) return handleError(err);
+        if (err) throw err;
         console.log("people added");
+        res.render('addRecord', { title: 'Add Contact', tab: "add" , row: peopleObj });
+
     });
 
-    res.render('addRecord', { title: 'Add Contact', tab: "add" , row: peopleObj });
 
 };
 
 exports.remove = function (req, res){
 
-    people.findOneAndRemove({ _id: req.query._id}, function (err) {
-        if (err) return handleError(err);
-        console.log(req.query);
+    console.log(req.query)
+
+    people.findOneAndRemove(req.query, function (err, obj) {
+        if (err) throw err;
         res.redirect("/list");
     });
 
