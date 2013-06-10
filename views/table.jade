@@ -20,7 +20,7 @@ block content
                 th Mobile
                 th Email
                 th Address
-                th.muted Del
+                th.muted
 
             each row in people
                 tr(id="#{row._id}")
@@ -31,7 +31,11 @@ block content
                     td #{row.email}
                     td #{row.address}
                     td
-                        a.close(onclick='$.ajax({url:"/people/#{row._id}",type:"DELETE", success: function() { $("##{row._id}").remove(); }})')&times;
+                        //TODO: this needs to change if update becomes RESTful using PUT via /people/:_id
+                        a(href="/update/#{row._id}")
+                            i.icon-pencil
+                        a(onclick='$.ajax({url:"/people/#{row._id}",type:"DELETE", success: function() { $("##{row._id}").remove(); }})')
+                            i.icon-trash
 
 
         button.btn(onclick='$.getJSON("/people", function(result) { $(body).html(JSON.stringify(result)); })') JSONTest

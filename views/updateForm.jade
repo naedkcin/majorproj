@@ -1,0 +1,38 @@
+//
+   Created with JetBrains WebStorm.
+   User: dave
+   Date: 5/06/13
+   Time: 4:51 PM
+   To change this template use File | Settings | File Templates.
+
+extends layout
+
+block content
+
+    div.span6.hero-unit
+        h4 Please update the details of the person
+        //TODO: make RESTful using PUT and /people/:_id
+        form(action="/update",  method="post")
+            .span2 First Name:
+            input(type="text", name="firstname", value="#{row.firstname}", required)
+            .span2 Last Name:
+            input(type="text", name="lastname", value="#{row.lastname}")
+            .span2 Email:
+            input(type="email", name="email", value="#{row.email}", required)
+            .span2 Home Phone:
+            input(type="text", name="homephone", value="#{row.homephone}")
+            .span2 Mobile:
+            input(type="text", name="mobile", value="#{row.mobile}", required)
+            .span2 Address:
+            input(type="text", name="address", value="#{row.address}")
+            input(type="hidden", name="_id", value="#{row._id}")
+            div.row
+                div.span1
+                div.span2
+                    input.btn.btn-danger(type="reset")Clear
+                dive.span2
+                    input.btn.btn-success(type="submit")Add
+
+
+
+

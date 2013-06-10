@@ -79,11 +79,11 @@ exports.load = function(req, res){
 
 exports.list = function (req, res){
 
-    console.log(req.headers);
+//    console.log(req.headers);
 
     people.find({}, function(err, docs) {
         if (err) throw err;
-        console.log(req.headers.accept.indexOf("json"));
+//        console.log(req.headers.accept.indexOf("json"));
         if(req.headers.accept.indexOf("json") != -1) {
             res.send(docs);
         } else {
@@ -115,13 +115,40 @@ exports.addRecord = function (req, res){
 
 };
 
+exports.updateForm = function (req, res){
+
+    console.log('Update form: ' + req.param('_id'));
+
+    people.findById(req.param('_id'), function (err, peopleObj) {
+        if (err) throw err;
+        res.render('updateForm', { title: 'Update Contact', tab: "list", row: peopleObj});
+    });
+
+};
+
+exports.update = function (req, res){
+//TODO: make this more RESTful by accepting the _id via req.param('_id') not in the req.body
+    var id = req.body._id;
+    if(req.body._id) {
+        delete req.body._id;
+    }
+
+    console.log('Update action: ' + id);
+    console.log(req.body);
+
+    people.findByIdAndUpdate(id, req.body, function (err, obj) {
+        if (err) throw err;
+        res.redirect("/people")
+    });
+
+};
+
 exports.remove = function (req, res){
 
-    console.log(req.param('_id'));
+    console.log('Remove: ' + req.param('_id'));
 
     people.findOneAndRemove({ _id: req.param('_id') } , function (err, obj) {
         if (err) throw err;
-//        res.redirect("/list");
         res.send();
     });
 

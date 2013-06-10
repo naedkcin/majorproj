@@ -35,6 +35,8 @@ app.get('/load', data.load);
 app.get('/people', data.list);
 app.get('/add', data.addForm);
 app.post('/people', data.addRecord);
+app.get('/update/:_id', data.updateForm);
+app.post('/update', data.update); //TODO: make RESTful i.e. using PUT to /people/:_id
 app.delete('/people/:_id', data.remove);
 
 http.createServer(app).listen(app.get('port'), function(){
