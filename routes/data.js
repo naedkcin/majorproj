@@ -6,29 +6,34 @@
  * To change this template use File | Settings | File Templates.
  */
 
-var mongo = require('mongodb');
 var fs = require('fs');
 
-var Server = mongo.Server,
-    Db = mongo.Db,
-    BSON = mongo.BSONPure;
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/test');
 
-var server = new Server('localhost', 27017, {auto_reconnect: true});
-var db = new Db('test', server);
-
-db.open(function(err, db) {
-    if(!err) {
-        console.log("Connected to " + db.databaseName + " database");
-    }
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function callback () {
+    console.log("Connected to " + db.db.databaseName + " database");
 });
+
+var peopleSchema = new mongoose.Schema({
+    firstname: String,
+    lastname: String,
+    email: String,
+    homephone: String,
+    mobile: String,
+    address: String
+});
+
+var people = mongoose.model('people', peopleSchema);
 
 exports.clear = function(req, res){
 
-    db.collection('people', function(err, collection) {
-        collection.remove(function(err, result) {});
+    people.remove(function (err) {
+        if (err) throw err;
         res.render('index', { title: 'Database cleared', tab: "clear" });
     });
-
 
 };
 
@@ -45,7 +50,7 @@ exports.load = function(req, res){
 
         for(var i = 0; i < buf.length; i++) {
 
-            var peopleObj = {};
+            var peopleObj = new people();
             var peopleRec = [];
 
             peopleRec = buf[i].split(",");
@@ -59,8 +64,9 @@ exports.load = function(req, res){
 
             console.log(peopleObj);
 
-            db.collection('people', function(err, collection) {
-                collection.insert( peopleObj , {safe:true}, function(err, result) {});
+            peopleObj.save(function (err) {
+                if (err) throw err;
+                console.log("people added");
             });
 
         }
@@ -73,13 +79,16 @@ exports.load = function(req, res){
 
 exports.list = function (req, res){
 
-    //var peopleArr = [];
+//    console.log(req.headers);
 
-    db.collection('people', function(err, collection) {
-//        collection.find({ firstname: { $regex : '^S' } }).toArray(function(err, docs) {
-        collection.find({  }).toArray(function(err, docs) {
+    people.find({}, function(err, docs) {
+        if (err) throw err;
+//        console.log(req.headers.accept.indexOf("json"));
+        if(req.headers.accept.indexOf("json") != -1) {
+            res.send(docs);
+        } else {
             res.render('table', { title: 'People', tab: "list" , people: docs });
-        });
+        }
     });
 
 };
@@ -92,23 +101,55 @@ exports.addForm = function (req, res){
 
 exports.addRecord = function (req, res){
 
-    db.collection('people', function(err, collection) {
-        console.log(req.body);
-        collection.insert( req.body , {safe:true}, function(err, result) {});
+    var peopleObj = new people(req.body);
+
+    console.log(peopleObj);
+
+    peopleObj.save(function (err) {
+        if (err) throw err;
+        console.log("people added");
+        res.render('addRecord', { title: 'Add Contact', tab: "add" , row: peopleObj });
+
     });
 
-    res.render('addRecord', { title: 'Add Contact', tab: "add" , row: req.body });
+
+};
+
+exports.updateForm = function (req, res){
+
+    console.log('Update form: ' + req.param('_id'));
+
+    people.findById(req.param('_id'), function (err, peopleObj) {
+        if (err) throw err;
+        res.render('updateForm', { title: 'Update Contact', tab: "list", row: peopleObj});
+    });
+
+};
+
+exports.update = function (req, res){
+//TODO: make this more RESTful by accepting the _id via req.param('_id') not in the req.body
+    var id = req.body._id;
+    if(req.body._id) {
+        delete req.body._id;
+    }
+
+    console.log('Update action: ' + id);
+    console.log(req.body);
+
+    people.findByIdAndUpdate(id, req.body, function (err, obj) {
+        if (err) throw err;
+        res.redirect("/people")
+    });
 
 };
 
 exports.remove = function (req, res){
 
-    var obj_id = new BSON.ObjectID(req.query._id);
+    console.log('Remove: ' + req.param('_id'));
 
-    db.collection('people', function(err, collection) {
-        console.log(req.query);
-        collection.remove({ _id: obj_id }, function(err, result) {});
-        res.redirect("/list");
+    people.findOneAndRemove({ _id: req.param('_id') } , function (err, obj) {
+        if (err) throw err;
+        res.send();
     });
 
 };

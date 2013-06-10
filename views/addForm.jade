@@ -11,7 +11,7 @@ block content
 
     div.span6.hero-unit
         h4 Please enter the details of a new person
-        form(method="post")
+        form(action="/people",  method="post")
             .span2 First Name:
             input(type="text", name="firstname", required)
             .span2 Last Name:
@@ -27,9 +27,9 @@ block content
             div.row
                 div.span1
                 div.span2
-                    input.btn.btn-danger(type="reset")Clear
+                    input.btn.btn-danger(type="reset", value="Clear")
                 dive.span2
-                    input.btn.btn-success(type="submit")Add
+                    input.btn.btn-success(type="submit", value="Add")
 
 
 
