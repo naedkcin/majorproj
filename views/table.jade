@@ -34,7 +34,7 @@ block content
                         //TODO: this needs to change if update becomes RESTful using PUT via /people/:_id
                         a(href="/update/#{row._id}")
                             i.icon-pencil
-                        a(onclick='$.ajax({url:"/people/#{row._id}",type:"DELETE", success: function() { $("##{row._id}").remove(); }})')
+                        a(onclick='if(confirm("Are you sure?")) {$.ajax({url:"/people/#{row._id}",type:"DELETE", success: function() { $("##{row._id}").remove(); }})}')
                             i.icon-trash
 
 
