@@ -9,6 +9,7 @@ extends layout
 
 block content
 
+  div.row-fluid
     div.span12
         table.table.table-bordered.table-striped
 
@@ -22,7 +23,7 @@ block content
                 th.muted Del
 
             each row in people
-                tr
+                tr(id="#{row._id}")
                     td #{row.lastname}
                     td #{row.firstname}
                     td #{row.homephone}
@@ -30,6 +31,7 @@ block content
                     td #{row.email}
                     td #{row.address}
                     td
-                        a.close(href="/remove?_id=#{row._id}")&times;
+                        a.close(onclick='$.ajax({url:"/people/#{row._id}",type:"DELETE", success: function() { $("##{row._id}").remove(); }})')&times;
 
 
+        button.btn(onclick='$.getJSON("/people", function(result) { $(body).html(JSON.stringify(result)); })') JSONTest

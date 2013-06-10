@@ -79,9 +79,16 @@ exports.load = function(req, res){
 
 exports.list = function (req, res){
 
+    console.log(req.headers);
+
     people.find({}, function(err, docs) {
         if (err) throw err;
-        res.render('table', { title: 'People', tab: "list" , people: docs });
+        console.log(req.headers.accept.indexOf("json"));
+        if(req.headers.accept.indexOf("json") != -1) {
+            res.send(docs);
+        } else {
+            res.render('table', { title: 'People', tab: "list" , people: docs });
+        }
     });
 
 };
@@ -110,11 +117,12 @@ exports.addRecord = function (req, res){
 
 exports.remove = function (req, res){
 
-    console.log(req.query)
+    console.log(req.param('_id'));
 
-    people.findOneAndRemove(req.query, function (err, obj) {
+    people.findOneAndRemove({ _id: req.param('_id') } , function (err, obj) {
         if (err) throw err;
-        res.redirect("/list");
+//        res.redirect("/list");
+        res.send();
     });
 
 };

@@ -32,10 +32,10 @@ app.get('/', routes.index);
 app.get('/users', user.list);
 app.get('/clear', data.clear);
 app.get('/load', data.load);
-app.get('/list', data.list);
+app.get('/people', data.list);
 app.get('/add', data.addForm);
-app.post('/add', data.addRecord)
-app.get('/remove', data.remove);
+app.post('/people', data.addRecord);
+app.delete('/people/:_id', data.remove);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
