@@ -34,7 +34,7 @@ app.get('/clear', data.clear);
 app.get('/load', data.load);
 app.get('/list', data.list);
 app.get('/add', data.addForm);
-app.post('/add', data.addRecord)
+app.post('/add', data.addRecord);
 app.get('/remove', data.remove);
 
 http.createServer(app).listen(app.get('port'), function(){
