@@ -17,15 +17,16 @@ var server = new Server('localhost', 27017, {auto_reconnect: true});
 var db = new Db('test', server);
 
 db.open(function(err, db) {
-    if(!err) {
-        console.log("Connected to " + db.databaseName + " database");
-    }
+    if (err) throw err;
+    console.log("Connected to " + db.databaseName + " database");
 });
 
 exports.clear = function(req, res){
 
     db.collection('people', function(err, collection) {
+        if (err) throw err;
         collection.remove(function(err, result) {});
+        if (err) throw err;
         res.render('index', { title: 'Database cleared', tab: "clear" });
     });
 
@@ -39,7 +40,7 @@ exports.load = function(req, res){
     fs.readFile('contacts.csv', function(err, data) {
         if (err) throw err;
 
-        buf = data.toString().split("#\r\n");
+        buf = data.toString().split("#\n");
 
         console.log(buf);
 
@@ -60,6 +61,7 @@ exports.load = function(req, res){
             console.log(peopleObj);
 
             db.collection('people', function(err, collection) {
+                if (err) throw err;
                 collection.insert( peopleObj , {safe:true}, function(err, result) {});
             });
 
@@ -73,11 +75,10 @@ exports.load = function(req, res){
 
 exports.list = function (req, res){
 
-    //var peopleArr = [];
-
     db.collection('people', function(err, collection) {
-//        collection.find({ firstname: { $regex : '^S' } }).toArray(function(err, docs) {
+        if (err) throw err;
         collection.find({  }).toArray(function(err, docs) {
+            if (err) throw err;
             res.render('table', { title: 'People', tab: "list" , people: docs });
         });
     });
@@ -93,19 +94,49 @@ exports.addForm = function (req, res){
 exports.addRecord = function (req, res){
 
     db.collection('people', function(err, collection) {
+        if (err) throw err;
         console.log(req.body);
-        collection.insert( req.body , {safe:true}, function(err, result) {});
+        collection.insert( req.body , function(err, result) {});
     });
 
     res.render('addRecord', { title: 'Add Contact', tab: "add" , row: req.body });
 
 };
 
-exports.remove = function (req, res){
+exports.updateForm = function (req, res){
 
-    var obj_id = new BSON.ObjectID(req.query._id);
+    var obj_id = new BSON.ObjectID(req.params._id); // This converts the _id into a proper ObjectId for the .remove
 
     db.collection('people', function(err, collection) {
+        if (err) throw err;
+        console.log(req.param);
+        collection.findOne({ _id: obj_id }, function(err, result) {
+            if (err) throw err;
+            res.render('updateForm', { title: 'Update Contact', tab: "list", row: result });
+        });
+    });
+};
+
+exports.updateRecord = function (req, res){
+
+    var obj_id = new BSON.ObjectID(req.params._id); // This converts the _id into a proper ObjectId for the .update
+
+    db.collection('people', function(err, collection) {
+        if (err) throw err;
+        console.log(req.body);
+        collection.update( { _id: obj_id }, req.body , function(err, result) {});
+    });
+
+    res.redirect('/list');
+
+};
+
+exports.remove = function (req, res){
+
+    var obj_id = new BSON.ObjectID(req.params._id); // This converts the _id into a proper ObjectId for the .remove
+
+    db.collection('people', function(err, collection) {
+        if (err) throw err;
         console.log(req.query);
         collection.remove({ _id: obj_id }, function(err, result) {});
         res.redirect("/list");

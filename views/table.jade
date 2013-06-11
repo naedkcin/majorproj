@@ -19,7 +19,7 @@ block content
                 th Mobile
                 th Email
                 th Address
-                th.muted Del
+                th.muted Action
 
             each row in people
                 tr
@@ -30,6 +30,9 @@ block content
                     td #{row.email}
                     td #{row.address}
                     td
-                        a.close(href="/remove?_id=#{row._id}")&times;
+                        a(href="/update/#{row._id}")
+                            i.icon-pencil
+                        a(href="/remove/#{row._id}")
+                            i.icon-trash
 
 
