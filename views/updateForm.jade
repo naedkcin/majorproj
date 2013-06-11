@@ -11,7 +11,8 @@ block content
 
     div.span6.hero-unit
         h4 Please upadte the details of a the person
-        form(method="post") //NOTE: The _id of the row is still included in the URL as .../update/:_id
+        //NOTE: The _id of the row is still included in the URL as .../update/:_id
+        form(method="post")
             .span2 First Name:
             input(type="text", name="firstname", value="#{row.firstname}", required)
             .span2 Last Name:

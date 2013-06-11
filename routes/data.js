@@ -25,9 +25,10 @@ exports.clear = function(req, res){
 
     db.collection('people', function(err, collection) {
         if (err) throw err;
-        collection.remove(function(err, result) {});
-        if (err) throw err;
-        res.render('index', { title: 'Database cleared', tab: "clear" });
+        collection.remove(function(err, result) {
+            if (err) throw err;
+            res.render('index', { title: 'Database cleared', tab: "clear" });
+        });
     });
 
 
@@ -62,7 +63,9 @@ exports.load = function(req, res){
 
             db.collection('people', function(err, collection) {
                 if (err) throw err;
-                collection.insert( peopleObj , {safe:true}, function(err, result) {});
+                collection.insert( peopleObj , {safe:true}, function(err, result) {
+                    if (err) throw err;
+                });
             });
 
         }
@@ -77,7 +80,7 @@ exports.list = function (req, res){
 
     db.collection('people', function(err, collection) {
         if (err) throw err;
-        collection.find({  }).toArray(function(err, docs) {
+        collection.find().toArray(function(err, docs) {
             if (err) throw err;
             res.render('table', { title: 'People', tab: "list" , people: docs });
         });
@@ -96,10 +99,13 @@ exports.addRecord = function (req, res){
     db.collection('people', function(err, collection) {
         if (err) throw err;
         console.log(req.body);
-        collection.insert( req.body , function(err, result) {});
+        collection.insert( req.body , function(err, result) {
+            if (err) throw err;
+            res.render('addRecord', { title: 'Add Contact', tab: "add" , row: req.body });
+        });
     });
 
-    res.render('addRecord', { title: 'Add Contact', tab: "add" , row: req.body });
+
 
 };
 
@@ -124,10 +130,11 @@ exports.updateRecord = function (req, res){
     db.collection('people', function(err, collection) {
         if (err) throw err;
         console.log(req.body);
-        collection.update( { _id: obj_id }, req.body , function(err, result) {});
+        collection.update( { _id: obj_id }, req.body , function(err, result) {
+            if (err) throw err;
+            res.redirect('/list');
+        });
     });
-
-    res.redirect('/list');
 
 };
 
@@ -138,8 +145,11 @@ exports.remove = function (req, res){
     db.collection('people', function(err, collection) {
         if (err) throw err;
         console.log(req.query);
-        collection.remove({ _id: obj_id }, function(err, result) {});
-        res.redirect("/list");
+        collection.remove({ _id: obj_id }, function(err, result) {
+            if (err) throw err;
+            res.redirect("/list");
+        });
+
     });
 
 };
