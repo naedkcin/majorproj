@@ -100,7 +100,7 @@ exports.updateForm = function (req, res){
     });
 };
 
-// Function used to update items in the database
+//Function used to update items in the database
 exports.updateRecord = function (req, res){
 
     var obj_id = new BSON.ObjectID(req.params._id); // This converts the _id into a proper ObjectId for the .update
