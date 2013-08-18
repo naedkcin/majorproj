@@ -31,13 +31,16 @@ if ('development' == app.get('env')) {
 app.get('/', routes.index);
 app.get('/users', user.list);
 app.get('/clear', data.clear);
-app.get('/load', data.load);
 app.get('/list', data.list);
 app.get('/add', data.addForm);
 app.post('/add', data.addRecord);
 app.get('/update/:_id', data.updateForm);
 app.post('/update/:_id', data.updateRecord);
 app.get('/remove/:_id', data.remove);
+app.get('/sort', data.sort)   ;
+app.get('/search', data.searchForm) ;
+app.post('/search', data.doSearch) ;
+app.get('/help', data.help) ;
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

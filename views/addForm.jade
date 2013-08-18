@@ -10,26 +10,25 @@ extends layout
 block content
 
     div.span6.hero-unit
-        h4 Please enter the details of a new person
+        h4 Please enter the details of a new post
         form(method="post")
-            .span2 First Name:
-            input(type="text", name="firstname", required)
-            .span2 Last Name:
-            input(type="text", name="lastname")
-            .span2 Email:
-            input(type="email", name="email" , required)
-            .span2 Home Phone:
-            input(type="text", name="homephone")
-            .span2 Mobile:
-            input(type="text", name="mobile", required)
-            .span2 Address:
-            input(type="text", name="address")
+            .span2 Heading:
+            input(type="text", name="heading", required)
+            .span2 Body:
+            input(type="text", name="body", required)
+            .span2 Image (url):
+            input(type="url", name="image", required)
+            .span2 Author:
+            input(type="text", name="author" , required)
+
+
+
             div.row
                 div.span1
                 div.span2
-                    input.btn.btn-danger(type="reset", value='Clear')
+                    input.btn.btn-action(type="reset", value='Reset')
                 dive.span2
-                    input.btn.btn-success(type="submit", value='Add')
+                    input.btn.btn-action(type="submit", value='Add')
 
 
 

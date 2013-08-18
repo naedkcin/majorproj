@@ -8,17 +8,59 @@ html
 
     h1.page-header= title
 
-    ul.nav.nav-pills
-      li#home: a(href='/') Home
-      li#clear: a(href='/clear') Clear Database
-      li#load: a(href='/load') Load Database
-      li#list: a(href='/list') List Database
-      li#add: a(href='/add') Add Record
+
+    div#menu.span3
+      ul.nav.nav-stacked.nav-list
+        li.nav-header imgDesk
+        li#home: a(href='/') Home
+        li#clear: a(href='/clear') Clear Posts
+        li#list: a(href='/list') List Posts
+        li#add: a(href='/add') Create Post
+        li#sort: a(href='/sort') Sort Posts
+        li#search: a(href = '/search') Search Posts
+        li#help: a(href = '/help') Help
 
     script.
       $(document).ready(function() {
           $(".active").removeClass("active");
           $("##{tab}").addClass("active");
-      });
+        });
 
-    block content
+     div.span12.pull-right
+
+      block content
+
+
+
+    script.
+            window.onload = function() {
+
+                function getScrollTop() {
+                if (typeof window.pageYOffset !== 'undefined' ) {
+
+                    return window.pageYOffset;
+                }
+
+                var d = document.documentElement;
+                if (d.clientHeight) {
+
+                    return d.scrollTop;
+                }
+
+
+                return document.body.scrollTop;
+                }
+
+                window.onscroll = function() {
+                    var box = document.getElementById('menu'),
+                        scroll = getScrollTop();
+
+                    if (scroll <= 120) {
+                        box.style.top = "150px";
+                    }
+                    else {
+                        box.style.top = (scroll + 30) + "px";
+                    }
+                }
+            };
+

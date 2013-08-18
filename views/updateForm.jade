@@ -10,24 +10,22 @@ extends layout
 block content
 
     div.span6.hero-unit
-        h4 Please upadte the details of a the person
+        h4 Please update the details of a post
         //NOTE: The _id of the row is still included in the URL as .../update/:_id
         form(method="post")
-            .span2 First Name:
-            input(type="text", name="firstname", value="#{row.firstname}", required)
-            .span2 Last Name:
-            input(type="text", name="lastname", value="#{row.lastname}")
-            .span2 Email:
-            input(type="email", name="email", value="#{row.email}", required)
-            .span2 Home Phone:
-            input(type="text", name="homephone", value="#{row.homephone}")
-            .span2 Mobile:
-            input(type="text", name="mobile", value="#{row.mobile}", required)
-            .span2 Address:
-            input(type="text", name="address", value="#{row.address}")
+            .span2 Heading:
+            input(type="text", name="heading", value="#{row.heading}", required)
+            .span2 Body:
+            input(type="text", name="body", value="#{row.body}", required)
+            .span2 Image (url):
+            input(type="url", name="image", value="#{row.image}", required)
+            .span2 Author:
+            input(type="text", name="author", value="#{row.author}", required)
+
+
             div.row
                 div.span1
                 div.span2
-                    input.btn.btn-danger(type="reset", value='Reset')
+                    input.btn.btn-action(type="reset", value='Reset')
                 div.span2
-                    input.btn.btn-success(type="submit", value='Update')
+                    input.btn.btn-action(type="submit", value='Update')

@@ -1,0 +1,27 @@
+//
+   Created with JetBrains WebStorm.
+   User: dave
+   Date: 5/06/13
+   Time: 4:51 PM
+   To change this template use File | Settings | File Templates.
+
+extends layout
+
+block content
+
+    div.span6.hero-unit
+        h4 Search Details
+        form(method="post")
+            .span2 Heading:
+            input(type="text", name="heading", required)
+
+            div.row
+                div.span1
+                div.span2
+                    input.btn.btn-action(type="reset", value='Cancel')
+                dive.span2
+                    input.btn.btn-action(type="submit", value='Submit')
+
+
+
+

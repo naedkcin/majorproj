@@ -9,30 +9,40 @@ extends layout
 
 block content
 
-    div.span12
-        table.table.table-bordered.table-striped
 
-            tr
-                th Last Name
-                th First Name
-                th Home Phone
-                th Mobile
-                th Email
-                th Address
-                th.muted Action
+    each row in posts
+        div.span8
+            table.table
 
-            each row in people
                 tr
-                    td #{row.lastname}
-                    td #{row.firstname}
-                    td #{row.homephone}
-                    td #{row.mobile}
-                    td #{row.email}
-                    td #{row.address}
                     td
-                        a(href="/update/#{row._id}")
-                            i.icon-pencil
-                        a(href="/remove/#{row._id}")
-                            i.icon-trash
+
+                       div#title #{row.heading}
+                       br
+
+                       div#author #{row.author}
+
+                       if row.date
+                           div#date #{row.date.toDateString()}
+                           br
+
+                       div#body #{row.body}
+                       br
+
+                       div#image
+                       img(src=row.image)
+                       br
+
+                       div#tags #{row.tags}
+                       br
+
+
+                       td#brent
+                            a(href="/update/#{row._id}")
+                                i.icon-pencil
+                            a(href="/remove/#{row._id}")
+                                i.icon-trash
+
+
 
 

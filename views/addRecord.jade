@@ -10,21 +10,23 @@ extends layout
 block content
 
     div.span12
-        h3 Record has been added
+        h3 Post has been added
 
-        table.table.table-bordered.table-striped
-                tr
-                    th Last Name
-                    th First Name
-                    th Home Phone
-                    th Mobile
-                    th Email
-                    th Address
+        table.table
+            tr
+                td
 
-                tr
-                    td #{row.lastname}
-                    td #{row.firstname}
-                    td #{row.homephone}
-                    td #{row.mobile}
-                    td #{row.email}
-                    td #{row.address}
+                    div#title #{row.heading}
+                    br
+
+                    div#author #{row.author}
+
+                    div#date #{row.date.toDateString()}
+                    br
+
+                    div#body #{row.body}
+                    br
+
+                    div#image
+                    img(src=row.image)
+                    br

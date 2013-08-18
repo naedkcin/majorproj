@@ -1,0 +1,43 @@
+//
+   Created with JetBrains WebStorm.
+   User: dave
+   Date: 26/05/13
+   Time: 9:30 PM
+   To change this template use File | Settings | File Templates.
+
+extends layout
+
+block content
+
+
+    each row in posts
+        div.span8
+            table.table
+
+                tr
+                    td
+
+                        div#title #{row.heading}
+                        br
+
+                        div#author #{row.author}
+
+                        if row.date
+                            div#date #{row.date}
+                            br
+
+                        div#body #{row.body}
+                        br
+
+                        div#image
+                        img(src=row.image)
+                        br
+
+
+                        td#brent
+                            a(href="/update/#{row._id}")
+                                i.icon-pencil
+                            a(href="/remove/#{row._id}")
+                                i.icon-trash
+
+
